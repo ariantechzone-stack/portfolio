@@ -1,4 +1,4 @@
-# Arian — Portfolio Website
+# Arian Tech — Portfolio Website
 
 Personal portfolio website showcasing frontend development projects.
 
