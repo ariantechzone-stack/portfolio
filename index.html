@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Arian Designs — Frontend Developer</title>
+  <title>Arian — Frontend Developer</title>
+  
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500&display=swap" />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+
   <link rel="icon" type="image/png" href="/logo.png" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,13 +32,14 @@
     body {
       background: var(--bg);
       color: var(--white);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'Outfit', sans-serif;
       font-weight: 400;
       line-height: 1.6;
       overflow-x: hidden;
       cursor: none;
     }
 
+    /* Custom cursor */
     .cursor {
       position: fixed;
       width: 12px; height: 12px;
@@ -41,7 +48,7 @@
       pointer-events: none;
       z-index: 9999;
       transform: translate(-50%, -50%);
-      transition: width 0.2s, height 0.2s;
+      transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
       mix-blend-mode: difference;
     }
     .cursor-ring {
@@ -52,17 +59,28 @@
       pointer-events: none;
       z-index: 9998;
       transform: translate(-50%, -50%);
-      transition: width 0.3s, height 0.3s;
+      transition: transform 0.15s ease, width 0.3s, height 0.3s;
     }
 
-    /* Grid lines — CSS only, no SVG filter */
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.4;
+    }
+
+    /* Grid lines */
     body::after {
       content: '';
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(0,229,255,0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,0.015) 1px, transparent 1px);
+        linear-gradient(rgba(0,229,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.02) 1px, transparent 1px);
       background-size: 60px 60px;
       pointer-events: none;
       z-index: 0;
@@ -81,14 +99,12 @@
       backdrop-filter: blur(8px);
     }
     .nav-logo {
+      font-family: 'Syne', sans-serif;
       font-weight: 800;
       font-size: 1.2rem;
       letter-spacing: -0.02em;
       color: var(--white);
       text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
     .nav-logo span { color: var(--cyan); }
     .nav-links { display: flex; gap: 36px; list-style: none; }
@@ -113,6 +129,7 @@
     .nav-links a:hover { color: var(--cyan); }
     .nav-links a:hover::after { width: 100%; }
 
+    /* SECTIONS */
     section { position: relative; z-index: 2; }
 
     /* HERO */
@@ -128,7 +145,7 @@
     .hero-glow {
       position: absolute;
       width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
@@ -167,6 +184,7 @@
     }
 
     h1 {
+      font-family: 'Syne', sans-serif;
       font-size: clamp(3rem, 7vw, 6rem);
       font-weight: 800;
       line-height: 1.0;
@@ -282,6 +300,7 @@
     }
 
     h2 {
+      font-family: 'Syne', sans-serif;
       font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 700;
       letter-spacing: -0.02em;
@@ -364,6 +383,8 @@
       border-radius: 12px;
       overflow: hidden;
       transition: all 0.3s;
+      position: relative;
+      group: true;
     }
 
     .project-card:hover {
@@ -394,6 +415,7 @@
       height: 75%;
       border-radius: 6px;
       border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
       overflow: hidden;
     }
 
@@ -406,7 +428,10 @@
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    .mockup-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .mockup-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+    }
 
     .mockup-content-cc {
       background: #0f172a;
@@ -435,7 +460,11 @@
       align-content: start;
     }
 
-    .mockup-stat { background: #1e293b; border-radius: 4px; height: 28px; }
+    .mockup-stat {
+      background: #1e293b;
+      border-radius: 4px;
+      height: 28px;
+    }
 
     .mockup-chart {
       grid-column: 1 / -1;
@@ -488,7 +517,10 @@
       padding: 0 4px;
     }
 
-    .mockup-bar-item { flex: 1; border-radius: 2px 2px 0 0; }
+    .mockup-bar-item {
+      flex: 1;
+      border-radius: 2px 2px 0 0;
+    }
 
     .project-body { padding: 24px; }
 
@@ -510,6 +542,7 @@
     }
 
     .project-title {
+      font-family: 'Syne', sans-serif;
       font-size: 1.3rem;
       font-weight: 700;
       margin-bottom: 8px;
@@ -524,7 +557,10 @@
       font-weight: 300;
     }
 
-    .project-links { display: flex; gap: 12px; }
+    .project-links {
+      display: flex;
+      gap: 12px;
+    }
 
     .project-link {
       display: inline-flex;
@@ -549,7 +585,10 @@
       text-align: center;
     }
 
-    .contact-inner { max-width: 600px; margin: 0 auto; }
+    .contact-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
     .contact-inner h2 {
       font-size: clamp(2.5rem, 5vw, 4rem);
@@ -560,15 +599,8 @@
       color: var(--gray2);
       font-size: 1rem;
       line-height: 1.7;
-      margin-bottom: 24px;
+      margin-bottom: 48px;
       font-weight: 300;
-    }
-
-    .contact-email {
-      color: var(--cyan);
-      font-size: 0.95rem;
-      margin-bottom: 36px;
-      display: block;
     }
 
     .contact-links {
@@ -578,6 +610,7 @@
       flex-wrap: wrap;
     }
 
+    /* FOOTER */
     footer {
       position: relative;
       z-index: 2;
@@ -588,9 +621,14 @@
       align-items: center;
     }
 
-    footer p { color: var(--gray); font-size: 0.8rem; }
+    footer p {
+      color: var(--gray);
+      font-size: 0.8rem;
+    }
+
     footer span { color: var(--cyan); }
 
+    /* ANIMATIONS */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
@@ -601,8 +639,12 @@
       transform: translateY(32px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
+    /* RESPONSIVE */
     @media (max-width: 768px) {
       nav { padding: 20px 24px; }
       .nav-links { display: none; }
@@ -620,14 +662,16 @@
 </head>
 <body>
 
+  <!-- Cursor -->
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
+  <!-- Nav -->
   <nav>
-    <a href="#hero" class="nav-logo">
-      <img src="/logo.png" alt="Arian Designs" style="height:36px;width:36px;border-radius:8px;object-fit:cover;" />
-      Arian Designs
-    </a>
+    <a href="#hero" class="nav-logo" style="display:flex;align-items:center;gap:10px;">
+  <img src="/logo.png" alt="Arian Designs" style="height:36px;width:36px;border-radius:8px;object-fit:cover;" />
+  Arian Designs
+</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
@@ -635,6 +679,7 @@
     </ul>
   </nav>
 
+  <!-- Hero -->
   <section id="hero">
     <div class="hero-glow"></div>
     <div class="hero-content">
@@ -657,15 +702,22 @@
     </div>
   </section>
 
+  <!-- About -->
   <section id="about">
     <div class="reveal">
       <div class="section-label">About Me</div>
       <div class="about-grid">
         <div class="about-text">
           <h2>Crafting experiences<br>that feel <em>alive</em></h2>
-          <p>I'm <strong>Arian</strong>, a frontend developer passionate about building modern web applications that are both functional and visually compelling.</p>
-          <p>I specialize in <strong>React</strong> ecosystems — from architecting component structures to shipping polished UIs. I care deeply about performance, clean code, and the small details that make an interface feel great.</p>
-          <p>When I'm not coding, I'm exploring new tools, studying design systems, and building projects that push my skills forward.</p>
+          <p>
+            I'm <strong>Arian</strong>, a frontend developer passionate about building modern web applications that are both functional and visually compelling.
+          </p>
+          <p>
+            I specialize in <strong>React</strong> ecosystems — from architecting component structures to shipping polished UIs. I care deeply about performance, clean code, and the small details that make an interface feel great.
+          </p>
+          <p>
+            When I'm not coding, I'm exploring new tools, studying design systems, and building projects that push my skills forward.
+          </p>
         </div>
         <div class="skills-grid">
           <div class="skill-item">React</div>
@@ -683,6 +735,7 @@
     </div>
   </section>
 
+  <!-- Projects -->
   <section id="projects">
     <div class="projects-inner">
       <div class="projects-header reveal">
@@ -691,8 +744,10 @@
           <h2>Things I've built</h2>
         </div>
       </div>
+
       <div class="projects-grid">
 
+        <!-- CommerceCore -->
         <div class="project-card reveal">
           <div class="project-preview project-preview-commercecore">
             <div class="preview-mockup">
@@ -714,7 +769,9 @@
                   <div class="mockup-stat"></div>
                   <div class="mockup-stat"></div>
                   <div class="mockup-stat"></div>
-                  <div class="mockup-chart"><div class="mockup-chart-line"></div></div>
+                  <div class="mockup-chart">
+                    <div class="mockup-chart-line"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -727,15 +784,18 @@
               <span class="tag">Framer Motion</span>
             </div>
             <h3 class="project-title">CommerceCore</h3>
-            <p class="project-desc">A full-featured e-commerce admin dashboard. Manage products, track orders, view customer data, and monitor revenue — all in a clean, dark interface with protected auth routes.</p>
+            <p class="project-desc">
+              A full-featured e-commerce admin dashboard. Manage products, track orders, view customer data, and monitor revenue — all in a clean, dark interface with protected auth routes.
+            </p>
             <div class="project-links">
-              <a href="https://commerce-core-mu.vercel.app/dashboard" target="_blank" class="project-link">Live Demo →</a>
+              <a href="https://commerce-core-mu.vercel.app" target="_blank" class="project-link">Live Demo →</a>
               <a href="https://github.com/ariantechzone-stack/commercecore" target="_blank" class="project-link secondary">GitHub ↗</a>
             </div>
           </div>
         </div>
 
-        <div class="project-card reveal" style="transition-delay:0.1s">
+        <!-- SpendSmart -->
+        <div class="project-card reveal" style="transition-delay: 0.1s">
           <div class="project-preview project-preview-spendsmart">
             <div class="preview-mockup">
               <div class="mockup-bar" style="background:#16213e">
@@ -771,9 +831,11 @@
               <span class="tag">localStorage</span>
             </div>
             <h3 class="project-title">SpendSmart</h3>
-            <p class="project-desc">A personal finance tracker with income and expense logging, spending breakdown charts, and monthly budget goals with live progress tracking. Data persists via localStorage.</p>
+            <p class="project-desc">
+              A personal finance tracker with income and expense logging, spending breakdown charts, and monthly budget goals with live progress tracking. Data persists via localStorage.
+            </p>
             <div class="project-links">
-              <a href="https://spendsmart-gold.vercel.app/dashboard" target="_blank" class="project-link">Live Demo →</a>
+              <a href="https://spendsmart-gold.vercel.app" target="_blank" class="project-link">Live Demo →</a>
               <a href="https://github.com/ariantechzone-stack/spendsmart" target="_blank" class="project-link secondary">GitHub ↗</a>
             </div>
           </div>
@@ -783,28 +845,33 @@
     </div>
   </section>
 
+  <!-- Contact -->
   <section id="contact">
     <div class="contact-inner reveal">
       <div class="section-label" style="justify-content:center">Contact</div>
       <h2>Let's work<br><span style="background:linear-gradient(135deg,var(--cyan),#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">together.</span></h2>
       <p>I'm open to freelance projects, junior developer roles, and collaborations. If you have something in mind, let's talk.</p>
-      <span class="contact-email">ariantechzone@gmail.com</span>
+      
+      <p style="color:var(--cyan);font-size:0.95rem;margin-top:-24px;">ariantechzone@gmail.com</p>
       <div class="contact-links">
-        <a href="mailto:ariantechzone@gmail.com" class="btn-primary">Send an Email →</a>
+        <a href="mailto:ariantechzone@gmail.com" class="btn-primary" title="ariantechzone@gmail.com">Send an Email →</a>
         <a href="https://github.com/ariantechzone-stack" target="_blank" class="btn-secondary">GitHub ↗</a>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer>
     <p>© 2026 <span>Arian Designs</span>. Built with HTML, CSS & JS.</p>
     <p style="color:var(--gray);font-size:0.8rem">Designed & developed by Arian Designs</p>
   </footer>
 
   <script>
+    // Custom cursor
     const cursor = document.getElementById('cursor')
     const ring = document.getElementById('cursorRing')
-    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0
+    let mouseX = 0, mouseY = 0
+    let ringX = 0, ringY = 0
 
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX
@@ -837,20 +904,28 @@
       })
     })
 
+    // Scroll reveal
     const reveals = document.querySelectorAll('.reveal')
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible')
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+        }
       })
     }, { threshold: 0.1 })
+
     reveals.forEach(el => observer.observe(el))
 
+    // Nav active highlight on scroll
     const sections = document.querySelectorAll('section[id]')
     const navLinks = document.querySelectorAll('.nav-links a')
+
     window.addEventListener('scroll', () => {
       let current = ''
       sections.forEach(section => {
-        if (window.scrollY >= section.offsetTop - 200) current = section.getAttribute('id')
+        if (window.scrollY >= section.offsetTop - 200) {
+          current = section.getAttribute('id')
+        }
       })
       navLinks.forEach(link => {
         link.style.color = link.getAttribute('href') === `#${current}` ? 'var(--cyan)' : ''
