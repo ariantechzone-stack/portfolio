@@ -658,8 +658,51 @@
       footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
       .hero-scroll { display: none; }
     }
-  </style>
+    /* Skill Popup */
+.skill-item { cursor: pointer; user-select: none; }
+.skill-item.active { border-color: var(--cyan); color: var(--white); background: var(--cyan-dim); }
+
+.skill-popup {
+  position: fixed;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: #12121f;
+  border: 1px solid rgba(0,229,255,0.35);
+  border-left: 3px solid #00e5ff;
+  padding: 14px 44px 14px 18px;
+  border-radius: 10px;
+  max-width: 380px;
+  width: 90%;
+  z-index: 9990;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+  line-height: 1.6;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  backdrop-filter: blur(16px);
+}
+.skill-popup.show { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+.skill-popup strong { color: #f0f0ff; display: block; margin-bottom: 4px; font-size: 0.9rem; }
+.skill-popup span { color: #9ca3af; font-size: 0.85rem; }
+.skill-popup-close {
+  position: absolute; top: 10px; right: 12px;
+  background: none; border: none; color: #6b7280;
+  cursor: pointer; font-size: 1rem; line-height: 1;
+}
+.skill-popup-close:hover { color: #f0f0ff; }
+    
+</style>
 </head>
+<body>
+
+  <div class="skill-popup" id="skillPopup">
+  <strong id="skillPopupTitle"></strong>
+  <span id="skillPopupText"></span>
+  <button class="skill-popup-close" id="skillPopupClose">&#x2715;</button>
+</div>
+
+  <!-- Cursor -->
 <body>
 
   <!-- Cursor -->
@@ -719,16 +762,16 @@
           </p>
         </div>
         <div class="skills-grid">
-          <div class="skill-item">React</div>
-          <div class="skill-item">JavaScript</div>
-          <div class="skill-item">Tailwind CSS</div>
-          <div class="skill-item">React Router</div>
-          <div class="skill-item">Recharts</div>
-          <div class="skill-item">Framer Motion</div>
-          <div class="skill-item">Vite</div>
-          <div class="skill-item">Git & GitHub</div>
-          <div class="skill-item">REST APIs</div>
-          <div class="skill-item">Responsive Design</div>
+<div class="skill-item" data-skill="React" data-info="A JavaScript library for building fast, component-based UIs. Used in all 4 of my projects.">React</div>
+<div class="skill-item" data-skill="JavaScript" data-info="The core language of the web. I use ES6+ features like async/await, destructuring, and arrow functions daily.">JavaScript</div>
+<div class="skill-item" data-skill="Tailwind CSS" data-info="A utility-first CSS framework. Lets me build beautiful, responsive UIs rapidly without writing custom CSS from scratch.">Tailwind CSS</div>
+<div class="skill-item" data-skill="React Router" data-info="The official routing library for React. I use it to build multi-page apps with protected routes and dynamic URLs.">React Router</div>
+<div class="skill-item" data-skill="Recharts" data-info="A charting library for React. I use it to build interactive line charts, bar charts, and donut charts in my dashboards.">Recharts</div>
+<div class="skill-item" data-skill="Framer Motion" data-info="A React animation library. I use it for smooth transitions, hover effects, and animated UI elements like KPI cards.">Framer Motion</div>
+<div class="skill-item" data-skill="Vite" data-info="A modern frontend build tool — much faster than Webpack. It powers my local dev server and production builds.">Vite</div>
+<div class="skill-item" data-skill="Git &amp; GitHub" data-info="Version control tools I use daily. Git tracks code changes, GitHub hosts all my projects publicly for anyone to review.">Git &amp; GitHub</div>
+<div class="skill-item" data-skill="REST APIs" data-info="I integrate real external APIs using fetch and async/await. Used in WeatherNow (OpenWeatherMap) and CineSearch (TMDB).">REST APIs</div>
+<div class="skill-item" data-skill="Responsive Design" data-info="I build layouts that look great on any screen using CSS Grid, Flexbox, and media queries. All my projects are fully responsive.">Responsive Design</div>
         </div>
       </div>
     </div>
@@ -927,7 +970,7 @@
     <h3 class="project-title">CineSearch</h3>
     <p class="project-desc">A cinematic movie search app with trending homepage, full movie details, cast info, and YouTube trailer playback. Powered by TMDB API.</p>
     <div class="project-links">
-      <a href="https://cinesearch.vercel.app" target="_blank" class="project-link">Live Demo →</a>
+      <a href="https://cinesearch-pi.vercel.app/" target="_blank" class="project-link">Live Demo →</a>
       <a href="https://github.com/ariantechzone-stack/cinesearch" target="_blank" class="project-link secondary">GitHub ↗</a>
     </div>
   </div>
@@ -1023,6 +1066,41 @@
         link.style.color = link.getAttribute('href') === `#${current}` ? 'var(--cyan)' : ''
       })
     })
+    
+    // Skill popup
+const skillPopup = document.getElementById('skillPopup')
+const skillPopupTitle = document.getElementById('skillPopupTitle')
+const skillPopupText = document.getElementById('skillPopupText')
+const skillPopupClose = document.getElementById('skillPopupClose')
+let skillTimer
+
+document.querySelectorAll('.skill-item').forEach(item => {
+  item.addEventListener('click', () => {
+    skillPopupTitle.textContent = item.getAttribute('data-skill')
+    skillPopupText.textContent = item.getAttribute('data-info')
+    skillPopup.classList.add('show')
+    document.querySelectorAll('.skill-item').forEach(s => s.classList.remove('active'))
+    item.classList.add('active')
+    clearTimeout(skillTimer)
+    skillTimer = setTimeout(() => {
+      skillPopup.classList.remove('show')
+      item.classList.remove('active')
+    }, 6000)
+  })
+})
+
+skillPopupClose.addEventListener('click', () => {
+  skillPopup.classList.remove('show')
+  document.querySelectorAll('.skill-item').forEach(s => s.classList.remove('active'))
+})
+
+document.addEventListener('click', (e) => {
+  if (!e.target.classList.contains('skill-item') && !skillPopup.contains(e.target)) {
+    skillPopup.classList.remove('show')
+    document.querySelectorAll('.skill-item').forEach(s => s.classList.remove('active'))
+  }
+})
+    
   </script>
 </body>
 </html>
