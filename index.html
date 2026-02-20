@@ -1062,6 +1062,41 @@
         link.style.color = link.getAttribute('href') === `#${current}` ? 'var(--cyan)' : ''
       })
     })
+    
+    // Skill popup
+const skillPopup = document.getElementById('skillPopup')
+const skillPopupTitle = document.getElementById('skillPopupTitle')
+const skillPopupText = document.getElementById('skillPopupText')
+const skillPopupClose = document.getElementById('skillPopupClose')
+let skillTimer
+
+document.querySelectorAll('.skill-item').forEach(item => {
+  item.addEventListener('click', () => {
+    skillPopupTitle.textContent = item.getAttribute('data-skill')
+    skillPopupText.textContent = item.getAttribute('data-info')
+    skillPopup.classList.add('show')
+    document.querySelectorAll('.skill-item').forEach(s => s.classList.remove('active'))
+    item.classList.add('active')
+    clearTimeout(skillTimer)
+    skillTimer = setTimeout(() => {
+      skillPopup.classList.remove('show')
+      item.classList.remove('active')
+    }, 6000)
+  })
+})
+
+skillPopupClose.addEventListener('click', () => {
+  skillPopup.classList.remove('show')
+  document.querySelectorAll('.skill-item').forEach(s => s.classList.remove('active'))
+})
+
+document.addEventListener('click', (e) => {
+  if (!e.target.classList.contains('skill-item') && !skillPopup.contains(e.target)) {
+    skillPopup.classList.remove('show')
+    document.querySelectorAll('.skill-item').forEach(s => s.classList.remove('active'))
+  }
+})
+    
   </script>
 </body>
 </html>
